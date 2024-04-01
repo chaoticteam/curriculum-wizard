@@ -169,7 +169,7 @@ export default function Curriculum(){
               <p className="sub-title">
                 {company}{address?`, ${address}`:''}
               </p>
-              {description?.split("\n").map(line=><p>{line}</p>)}
+              {description?.split("\n").map((line,i)=><p key={i}>{line}</p>)}
               <span>
                 {dateStart.toLocaleDateString("en-US",dateFormat)}{dateEnd?` - ${dateEnd.toLocaleDateString("en-US",dateFormat)}`:''}
                 <a onClick={()=>handleRemoveExperience(i)}>
