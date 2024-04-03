@@ -138,7 +138,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
     languages,
     hobbies,
   } = profile;
-  const showSideBar=!!dateBorn;
+  const showSideBar=!!dateBorn||skills?.length||languages?.length||hobbies?.length;
   return (
     <Document>
       <Page size={size} style={styles.page} wrap>
@@ -146,7 +146,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
           {photo&&<Image src={photo} />}
           <View style={{marginLeft:"2%"}} >
             <Text style={styles.h1}>
-            {!!firstName||!!lastName?`${firstName} ${lastName}`:"Curriculum Vitae"}
+            {!!firstName||!!lastName?`${firstName||""} ${lastName||""}`:"Curriculum Vitae"}
             </Text>
             <View style={styles.row}>
               {email&&<><Email /><Text style={styles["h5-among"]}>{email}</Text></>}
