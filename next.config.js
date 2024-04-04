@@ -7,8 +7,8 @@ const nextConfig = {
     BASE_URL: process.env.BASE_URL || "",
   },
   output: 'export',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
+  trailingSlash: false,
+  skipTrailingSlashRedirect: false,
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
