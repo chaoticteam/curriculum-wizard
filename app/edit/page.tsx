@@ -1,27 +1,25 @@
 'use client'
-import dynamic from "next/dynamic";
+export const dynamic = "force-static";
 import React, { useCallback, useEffect, useState } from "react";
 import {CurriculumTemplate, IContentCV, IExperince, IFormation, ILanguage, ISkills} from "@/components";
 import styled from "styled-components";
 import Form from "form-with-state";
 import {redirect} from "next/navigation"
-const PDFViewer = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod. PDFViewer),
-  {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-  },
-);
+import { PDFViewer } from "@react-pdf/renderer";
+import { useSearchParams } from 'next/navigation';
 const dateFormat: Intl.DateTimeFormatOptions = {
   month:"long",
   year:"numeric"
 }
-export default function Curriculum({searchParams}:{searchParams:{name:string}}){
-  if (!searchParams.name) redirect("/not-found")
-  const cvName = searchParams.name;
+export default function Curriculum(){
+  const searchParams = useSearchParams();
+  const name = searchParams.get("name")||"";
   const [profile,setProfile]=useState<IContentCV>();
   useEffect(()=>{
-    const item =localStorage.getItem(cvName)
+    if (!name) redirect("/not-found")
+  },[])
+  useEffect(()=>{
+    const item =localStorage.getItem(name)
     if (!!item){
       const json:IContentCV= JSON.parse(item,(key,value)=>{
         switch (key) {
@@ -56,7 +54,7 @@ export default function Curriculum({searchParams}:{searchParams:{name:string}}){
   useEffect(()=>{
     if (!profile) return;
     const item = JSON.stringify(profile);
-    localStorage.setItem(cvName,item);
+    localStorage.setItem(name,item);
   },[profile])
 
   const handleOnSubmitPersonalDetails= useCallback(async(data:any)=>{

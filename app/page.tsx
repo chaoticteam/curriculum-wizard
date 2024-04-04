@@ -1,31 +1,39 @@
 'use client'
+export const dynamic = "force-static";
 import Form from "form-with-state";
 import {useRouter} from "next/navigation"
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 export default function Page(){
-    const router = useRouter()
-
-    const getStateDefaultValue = useCallback(()=>{
-        const files = localStorage.getItem("files") || "[]";
-        const filesArray:[] = JSON.parse(files);
-        return filesArray;
-    },[])
-    const [state,setState] = useState<string[]>(getStateDefaultValue());
+    const router = useRouter();
+    // const getStateDefaultValue = useCallback(()=>{
+    //     if (typeof window != undefined){
+    //         const files = window.localStorage.getItem("files") || "[]";
+    //         const filesArray:[] = JSON.parse(files);
+    //         return filesArray;
+    //     }
+    //     return []
+    // },[])
+    const [state,setState] = useState<string[]>();
     useEffect(()=>{
+        const files = window.localStorage.getItem("files") || "[]";
+        setState(JSON.parse(files))
+    },[])
+    useEffect(()=>{
+        if (!state) return;
         localStorage.setItem("files",JSON.stringify(state));
-    });
+    },[state]);
     const handleDeleteFile = useCallback((key:string)=>{
         localStorage.removeItem(key);
-        const newState = state.filter(item=>item!=key)
+        const newState = state?.filter(item=>item!=key)
         setState(newState);
     },[state,setState]);
     const handlePush=useCallback((name:string)=>{
         router.push(`/edit/?name=${name}`,{scroll:false})
     },[router]);
     const handleOnSubmit = useCallback((name:string)=>{
-        setState([...state,name]);
+        setState([...state||[],name]);
         localStorage.setItem(name,"{}");
         handlePush(name)
     },[state,setState,handlePush]);
@@ -41,7 +49,7 @@ export default function Page(){
                         </Form>
                     </div>
                 </Card>
-            {state.map((item,i)=>(
+            {state?.map((item,i)=>(
                 <Card key={i}>
                     <div onClick={()=>handlePush(item)}>
                         {item}

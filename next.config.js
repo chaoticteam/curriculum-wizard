@@ -9,5 +9,8 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 module.exports = nextConfig;
