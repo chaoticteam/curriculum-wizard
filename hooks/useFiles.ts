@@ -21,7 +21,7 @@ export function useFiles(lang:string){
         setState(newState);
     },[state,setState]);
     const handlePush=useCallback((name:string)=>{
-        router.push(`${lang}/edit/?name=${name}`,{scroll:false})
+        router.push(`/${lang}/edit/?name=${name}`,{scroll:false})
     },[router]);
     const handleOnSubmit = useCallback((name:string)=>{
         setState([...state||[],name]);
