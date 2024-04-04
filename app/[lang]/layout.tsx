@@ -1,4 +1,7 @@
+import {Footer,Body} from "@/components";
 import { Metadata } from "next";
+import type { Locale } from "./i18n-config";
+import { getDictionary } from "./dictionaries";
 
 
 export const metadata: Metadata = {
@@ -10,18 +13,22 @@ export async function generateStaticParams() {
   return [{ lang: 'en' }, { lang: 'es' }]
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params:{lang}
 }: Readonly<{
   children: React.ReactNode;
-  params:{lang:string}
+  params:{lang:Locale}
 }>) {
+  const dict = await getDictionary(lang);
   return (
     <html lang={lang}>
-      <body>
-          {children}
-      </body>
+      <Body>
+          <div className="content">
+            {children}
+          </div>
+          <Footer dict={dict} />
+      </Body>
     </html>
   );
 }

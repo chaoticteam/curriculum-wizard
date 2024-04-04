@@ -1,6 +1,7 @@
 import React from 'react';
 import { Page, Text, View,Image , Document, StyleSheet, Svg, Path } from '@react-pdf/renderer';
 import { PageSize } from '@react-pdf/types';
+import { ITranslades } from '@/app/[lang]/dictionaries';
 export interface IContentCV{
   firstName?:string;
   lastName?:string;
@@ -14,6 +15,9 @@ export interface IContentCV{
   skills?:ISkills[];
   languages?:ILanguage[];
   hobbies?:string[];
+  document?: {
+    size: PageSize;
+  }
 }
 export interface IFormation{
  title:string;
@@ -41,18 +45,19 @@ export interface ILanguage{
 }
 interface IProps{
   profile?: IContentCV,
-  size?: PageSize,
+  dict:ITranslades,
 }
 // Create styles
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     backgroundColor: '#E4E4E4',
-    fontSize:"12pt"
+    fontSize:"12pt",
   },
   section: {
     margin: 10,
     padding: 10,
+    backgroundColor:"red",
     flexGrow: 1
   },
   header:{
@@ -60,14 +65,16 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     alignItems:"center",
     backgroundColor:"#303846",
-    height:"1.5in",
+    // height:"1.5in",
+    height:"15%",
     color:"#fff"
   },
   body:{
     padding:"12pt",
     display:"flex",
     flexDirection:"row",
-    height:"10in"
+    // height:"10in"
+    height:"85%"
   },
   h1:{
     textTransform:'capitalize',
@@ -122,7 +129,7 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
+export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
   if (!profile) return <></>
   const {
     firstName,
@@ -141,7 +148,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
   const showSideBar=!!dateBorn||skills?.length||languages?.length||hobbies?.length;
   return (
     <Document>
-      <Page size={size} style={styles.page} wrap>
+      <Page size={profile.document?.size} style={styles.page} wrap>
         <View style={styles.header}>
           {photo&&<Image src={photo} />}
           <View style={{marginLeft:"2%"}} >
@@ -157,11 +164,11 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
         <View style={styles.body}>
           <View style={styles.content}>
             {bio && <View>
-              <Text style={styles.h2}>Profile</Text>
+              <Text style={styles.h2}>{dict.curriculum.formDetails.bio}</Text>
               {bio.split("\n").map((line,i)=><Text key={i}>{line}</Text>)}
             </View>}
             {formations?.length &&<View style={styles.sideBarChild}>
-              <Text style={styles.h3}>Education</Text>
+              <Text style={styles.h3}>{dict.curriculum.containers.formations}</Text>
               {formations.map((item,i)=><View key={i} style={{position:"relative",marginVertical:"2%"}}>
                 <View>
                   <Text style={styles.h4}>{item.title}</Text>
@@ -173,7 +180,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
               </View>)}
             </View>}
             {experince?.length &&<View style={styles.sideBarChild}>
-              <Text style={styles.h3}>Experience</Text>
+              <Text style={styles.h3}>{dict.curriculum.containers.experience}</Text>
               {experince.map((item,i)=><View key={i} style={{position:"relative",marginVertical:"2%"}}>
                 <View>
                   <Text style={styles.h4}>{item.jobName}</Text>
@@ -188,12 +195,12 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
           </View>
           {showSideBar&&<View style={styles.sideBar}>
             {dateBorn&&<View style={styles.sideBarChild}>
-              <Text style={styles.h3}>Personal Details</Text>
-              <Text style={styles.h5}>Date of birth</Text>
+              <Text style={styles.h3}>{dict.curriculum.containers.details}</Text>
+              <Text style={styles.h5}>{dict.curriculum.formDetails.dateBorn}</Text>
               <Text>{dateBorn.toLocaleDateString("en-US", {day:"2-digit",month:"long",year:"numeric"})}</Text>
             </View>}
             {skills?.length&&<View style={styles.sideBarChild}>
-              <Text style={styles.h3}>Skills</Text>
+              <Text style={styles.h3}>{dict.curriculum.containers.skills}</Text>
               {skills.map((skill,i)=>(
                 <View key={i}>
                   <LevelBar label={skill.name} level={skill.level} />
@@ -201,7 +208,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
               ))}
             </View>}
             {languages?.length&&<View style={styles.sideBarChild}>
-              <Text style={styles.h3}>languages</Text>
+              <Text style={styles.h3}>{dict.curriculum.containers.langs}</Text>
               {languages.map((lang,i)=>(
                 <View key={i}>
                   <LevelBar label={lang.name} level={lang.level} />
@@ -209,7 +216,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,size="A4"}) =>{
               ))}
             </View>}
             {hobbies?.length&&<View style={styles.sideBarChild}>
-              <Text style={styles.h3}>hobbies</Text>
+              <Text style={styles.h3}>{dict.curriculum.containers.hobbies}</Text>
               {hobbies.map((skill,i)=>(
                 <View key={i} style={styles.row}>
                   <Square /><Text style={styles["h5-among"]}>{skill}</Text>

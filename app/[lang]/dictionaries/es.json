@@ -1,0 +1,69 @@
+{
+    "page":{
+        "form":{
+            "textfield":"nombre del archivo",
+            "submit":"crear archivo"
+        },
+        "label":"generador de Curriculum"
+    },
+    "curriculum":{
+        "containers":{
+            "details":"datos Personales",
+            "formations":"educacion",
+            "experience":"experiencia",
+            "skills":"habilidades",
+            "langs":"lenguajes",
+            "hobbies":"pasatiempos",
+            "document":"propiedades del documento"
+        },
+        "formDetails":{
+            "firstName":"nombres",
+            "lastName": "apellidos",
+            "email":"correo electronico",
+            "telephone":"telefono",
+            "dateBorn":"fecha de nacimiento",
+            "bio":"resumen",
+            "submit":"guardar"
+        },
+        "formFormations":{
+            "title":"titulo",
+            "institution":"institucion",
+            "address":"direccion",
+            "dateStart":"fecha de inicio",
+            "dateEnd":"fecha fin",
+            "description":"descripcion"
+        },
+        "formExperience":{
+            "jobName":"puesto",
+            "company":"empresa",
+            "address":"direccion",
+            "dateStart":"fecha de inicio",
+            "dateEnd":"fecha fin",
+            "description":"descripcion"
+        },
+        "formSkills":{
+            "level":"nivel",
+            "name":"habilidad"
+        },
+        "formLangs":{
+            "level":"nivel",
+            "name":"lenguaje"
+        },
+        "formHobbies":{
+            "textField":"pasatiempo"
+        },
+        "formDocument":{
+            "size":"tamaño",
+            "letter":"carta"
+        },
+
+        "formSubmit":"guardar"
+    },
+    "footer":{
+        "lang":"Idioma",
+        "languages":{
+            "english":"Ingles",
+            "spanish":"Español"
+        }
+    }
+}

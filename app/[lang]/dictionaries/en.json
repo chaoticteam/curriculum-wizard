@@ -1,0 +1,69 @@
+{
+    "page":{
+        "form":{
+            "textfield":"file name",
+            "submit":"create file"
+        },
+        "label":"cV Wizard"
+    },
+    "curriculum":{
+        "containers":{
+            "details":"personal Details",
+            "formations":"formations",
+            "experience":"experience",
+            "skills":"skills",
+            "langs":"languages",
+            "hobbies":"hobbies",
+            "document":"document settings"
+        },
+        "formDetails":{
+            "firstName":"first name",
+            "lastName": "last name",
+            "email":"e-mail",
+            "telephone":"telephone",
+            "dateBorn":"date born",
+            "bio":"profile",
+            "submit":"save"
+        },
+        "formFormations":{
+            "title":"title",
+            "institution":"institution",
+            "address":"address",
+            "dateStart":"date start",
+            "dateEnd":"date end",
+            "description":"description"
+        },
+        "formExperience":{
+            "jobName":"job name",
+            "company":"company",
+            "address":"address",
+            "dateStart":"date start",
+            "dateEnd":"date end",
+            "description":"description"
+        },
+        "formSkills":{
+            "level":"level",
+            "name":"skill"
+        },
+        "formLangs":{
+            "level":"level",
+            "name":"skill"
+        },
+        "formHobbies":{
+            "textField":"hobbie"
+        },
+        "formDocument":{
+            "size":"size",
+            "letter":"carta"
+        },
+        "formSubmit":"save"
+    },
+    "footer":{
+        "lang":"language",
+        "languages":{
+            "english":"english",
+            "spanish":"spanish"
+        }
+    }
+
+}
