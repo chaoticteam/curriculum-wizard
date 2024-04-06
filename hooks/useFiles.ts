@@ -24,9 +24,10 @@ export function useFiles(){
         router.push(`${pathname}/edit/?name=${name}`,{scroll:false})
     },[router]);
     const handleSave = useCallback((nameOld:string,name:string)=>{
+        const content = localStorage.getItem(nameOld)
         localStorage.removeItem(nameOld);
         const newState = state?.map(item=>item==nameOld?name:item);
-        localStorage.setItem(name,"{}");
+        localStorage.setItem(name,content ||"{}");
         setState(newState);
     },[state,setState]);
     const handleNew = useCallback(()=>{
