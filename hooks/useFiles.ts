@@ -1,11 +1,11 @@
 'use client'
 
-import {useRouter} from "next/navigation"
+import {usePathname, useRouter} from "next/navigation"
 import { useCallback, useEffect, useState } from "react";
 
-export function useFiles(lang:string){
-
+export function useFiles(){
     const router = useRouter();
+    const pathname = usePathname()
     const [state,setState] = useState<string[]>();
     useEffect(()=>{
         const files = window.localStorage.getItem("files") || "[]";
@@ -21,16 +21,31 @@ export function useFiles(lang:string){
         setState(newState);
     },[state,setState]);
     const handlePush=useCallback((name:string)=>{
-        router.push(`/${lang}/edit/?name=${name}`,{scroll:false})
+        router.push(`${pathname}/edit/?name=${name}`,{scroll:false})
     },[router]);
-    const handleOnSubmit = useCallback((name:string)=>{
-        setState([...state||[],name]);
+    const handleSave = useCallback((nameOld:string,name:string)=>{
+        localStorage.removeItem(nameOld);
+        const newState = state?.map(item=>item==nameOld?name:item);
         localStorage.setItem(name,"{}");
+        setState(newState);
     },[state,setState]);
+    const handleNew = useCallback(()=>{
+        const regex = /untitled-(\d+)/;
+        let value = 1;
+        state?.forEach(item=>{
+            const result = regex.exec(item)||[];
+            const group = parseInt(result[1])+1;
+            value = group>value?group:value;
+        })
+        const name = `untitled-${value}`;
+        localStorage.setItem(name,"{}");
+        setState([...state||[],name])
+    },[state,setState])
     return {
         state,
         handleDeleteFile,
-        handleOnSubmit,
+        handleSave,
+        handleNew,
         handlePush
     }
 }

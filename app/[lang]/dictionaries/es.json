@@ -2,7 +2,7 @@
     "page":{
         "form":{
             "textfield":"nombre del archivo",
-            "submit":"crear archivo"
+            "submit":"guardar"
         },
         "label":"generador de Curriculum"
     },
@@ -12,7 +12,7 @@
             "formations":"educacion",
             "experience":"experiencia",
             "skills":"habilidades",
-            "langs":"lenguajes",
+            "langs":"Idiomas",
             "hobbies":"pasatiempos",
             "document":"propiedades del documento"
         },
@@ -47,7 +47,7 @@
         },
         "formLangs":{
             "level":"nivel",
-            "name":"lenguaje"
+            "name":"Idioma"
         },
         "formHobbies":{
             "textField":"pasatiempo"

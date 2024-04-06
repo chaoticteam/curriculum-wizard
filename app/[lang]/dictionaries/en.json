@@ -2,7 +2,7 @@
     "page":{
         "form":{
             "textfield":"file name",
-            "submit":"create file"
+            "submit":"save"
         },
         "label":"cV Wizard"
     },

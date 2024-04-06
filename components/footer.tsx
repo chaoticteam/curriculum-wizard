@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 export const Footer= ({dict}:{dict:ITranslades}) => {
-  const year = useRef(new Date()).current
+  const year = useRef(new Date()).current;
 	return (
 		<Container>
       <div className='lang'>
@@ -34,5 +34,26 @@ text-transform: capitalize;
   justify-self: end;
   align-self: center;
 }
+& ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+& a {margin-left:1rem}
+& a:link {
+  text-decoration: none;
+}
 
+& a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+& a:hover {
+  text-decoration: underline;
+}
+
+& a:active {
+  text-decoration: underline;
+}
 `;

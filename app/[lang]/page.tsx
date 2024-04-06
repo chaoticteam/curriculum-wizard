@@ -8,7 +8,7 @@ export async function generateStaticParams() {
 export default async function Page({params:{lang}}:{params:{lang:Locale}}){
     const dict = await getDictionary(lang);
     return (
-        <Files dict={dict} lang={lang} />
+        <Files dict={dict} />
     )
 }
 
