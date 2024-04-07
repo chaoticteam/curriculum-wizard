@@ -17,6 +17,8 @@ export interface IContentCV{
   hobbies?:string[];
   document?: {
     size: PageSize;
+    color?:string;
+    background?:string;
   }
 }
 export interface IFormation{
@@ -50,8 +52,8 @@ interface IProps{
 // Create styles
 const styles = StyleSheet.create({
   page: {
+    position: 'relative',
     flexDirection: 'column',
-    backgroundColor: '#E4E4E4',
     fontSize:"12pt",
   },
   section: {
@@ -61,20 +63,26 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   header:{
+    position: 'relative',
     display: "flex",
     flexDirection:"row",
     alignItems:"center",
-    backgroundColor:"#303846",
-    // height:"1.5in",
     height:"15%",
-    color:"#fff"
   },
   body:{
+    position: 'relative',
     padding:"12pt",
     display:"flex",
     flexDirection:"row",
-    // height:"10in"
     height:"85%"
+  },
+  background:{
+    objectFit: "cover",
+    position:"absolute",
+    height:"100%",
+    width:"100%",
+    zIndex:-1,
+    opacity:.4,
   },
   h1:{
     textTransform:'capitalize',
@@ -117,12 +125,10 @@ const styles = StyleSheet.create({
     marginRight:6,
   },
   sideBar:{
-    borderLeft:"1pt solid #000",
     width:"3in",
     padding:"12pt",
   },
   sideBarChild:{
-    borderBottom:"1pt solid #000",
     paddingVertical:12,
     width:"100%",
   }
@@ -145,10 +151,12 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
     languages,
     hobbies,
   } = profile;
+  const {size,background,color} = profile.document||{};
   const showSideBar=!!dateBorn||skills?.length||languages?.length||hobbies?.length;
   return (
     <Document>
-      <Page size={profile.document?.size} style={styles.page} wrap>
+      <Page size={size} style={{...styles.page,color}} wrap>
+        {background&&<Image fixed style={styles.background} src={background} />}
         <View style={styles.header}>
           {photo&&<Image src={photo} />}
           <View style={{marginLeft:"2%"}} >
@@ -156,8 +164,8 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
             {!!firstName||!!lastName?`${firstName||""} ${lastName||""}`:"Curriculum Vitae"}
             </Text>
             <View style={styles.row}>
-              {email&&<><Email /><Text style={styles["h5-among"]}>{email}</Text></>}
-              {phoneNumber&&<><Telephone /><Text style={styles["h5-among"]}>{phoneNumber}</Text></>}
+              {email&&<><Email color={color} /><Text style={styles["h5-among"]}>{email}</Text></>}
+              {phoneNumber&&<><Telephone color={color} /><Text style={styles["h5-among"]}>{phoneNumber}</Text></>}
             </View>
           </View>
         </View>
@@ -167,7 +175,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
               <Text style={styles.h2}>{dict.curriculum.formDetails.bio}</Text>
               {bio.split("\n").map((line,i)=><Text key={i}>{line}</Text>)}
             </View>}
-            {formations?.length &&<View style={styles.sideBarChild}>
+            {formations?.length &&<View style={{...styles.sideBarChild,borderBottom:`1pt solid ${color}`}}>
               <Text style={styles.h3}>{dict.curriculum.containers.formations}</Text>
               {formations.map((item,i)=><View key={i} style={{position:"relative",marginVertical:"2%"}}>
                 <View>
@@ -179,7 +187,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
 
               </View>)}
             </View>}
-            {experince?.length &&<View style={styles.sideBarChild}>
+            {experince?.length &&<View style={{...styles.sideBarChild,borderBottom:`1pt solid ${color}`}}>
               <Text style={styles.h3}>{dict.curriculum.containers.experience}</Text>
               {experince.map((item,i)=><View key={i} style={{position:"relative",marginVertical:"2%"}}>
                 <View>
@@ -189,33 +197,32 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
 
                 </View>
                 <Text style={{position:"absolute",top:0,right:2}}>{item.dateStart.toLocaleDateString("en-US",{month:"long",year:"numeric"})}{item.dateEnd&&"- "+item.dateEnd.toLocaleDateString("en-US",{month:"long",year:"numeric"})}</Text>
-
               </View>)}
             </View>}
           </View>
-          {showSideBar&&<View style={styles.sideBar}>
-            {dateBorn&&<View style={styles.sideBarChild}>
+          {showSideBar&&<View style={{...styles.sideBar,borderLeft:`1pt solid ${color}`}}>
+            {dateBorn&&<View style={{...styles.sideBarChild,borderBottom:`1pt solid ${color}`}}>
               <Text style={styles.h3}>{dict.curriculum.containers.details}</Text>
               <Text style={styles.h5}>{dict.curriculum.formDetails.dateBorn}</Text>
               <Text>{dateBorn.toLocaleDateString("en-US", {day:"2-digit",month:"long",year:"numeric"})}</Text>
             </View>}
-            {skills?.length&&<View style={styles.sideBarChild}>
+            {skills?.length&&<View style={{...styles.sideBarChild,borderBottom:`1pt solid ${color}`}}>
               <Text style={styles.h3}>{dict.curriculum.containers.skills}</Text>
               {skills.map((skill,i)=>(
                 <View key={i}>
-                  <LevelBar label={skill.name} level={skill.level} />
+                  <LevelBar color={color} label={skill.name} level={skill.level} />
                 </View>
               ))}
             </View>}
-            {languages?.length&&<View style={styles.sideBarChild}>
+            {languages?.length&&<View style={{...styles.sideBarChild,borderBottom:`1pt solid ${color}`}}>
               <Text style={styles.h3}>{dict.curriculum.containers.langs}</Text>
               {languages.map((lang,i)=>(
                 <View key={i}>
-                  <LevelBar label={lang.name} level={lang.level} />
+                  <LevelBar color={color} label={lang.name} level={lang.level} />
                 </View>
               ))}
             </View>}
-            {hobbies?.length&&<View style={styles.sideBarChild}>
+            {hobbies?.length&&<View style={{...styles.sideBarChild,borderBottom:`1pt solid ${color}`}}>
               <Text style={styles.h3}>{dict.curriculum.containers.hobbies}</Text>
               {hobbies.map((skill,i)=>(
                 <View key={i} style={styles.row}>
@@ -229,16 +236,18 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
     </Document>
   )
 };
-
-const Email =()=>{
+interface ISvgProps {
+  color?:string;
+}
+const Email =({color}:ISvgProps)=>{
   return (
-    <Svg width="12pt" height="12pt" viewBox="0 0 24 24"><Path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"/></Svg>
+    <Svg width="12pt" height="12pt" viewBox="0 0 24 24"><Path fill={color||"currentColor"} d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"/></Svg>
   )
 }
-const Telephone =()=>{
+const Telephone =({color}:ISvgProps)=>{
   return (
     <Svg width="12pt" height="12pt" viewBox="0 0 16 16">
-      <Path fill="currentColor" fillRule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42a18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+      <Path fill={color||"currentColor"} fillRule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42a18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
     </Svg>
   )
 }
@@ -248,7 +257,7 @@ const Square=()=>{
   )
 }
 
-const LevelBar = ({label,level}:{label:string,level:1|2|3|4|5})=>{
+const LevelBar = ({color,label,level}:{color?:string,label:string,level:1|2|3|4|5})=>{
 return (
   <View>
     <Text>{`${label}(${level*20}%)`}</Text>
@@ -262,7 +271,7 @@ return (
         bottom:"-4pt",
         zIndex:2,
         width:`${level*20}%`,
-        borderBottom:"4pt solid #000",
+        borderBottom:`4pt solid ${color||"#000"}`,
       }} />
     </View>
   </View>

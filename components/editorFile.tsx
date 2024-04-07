@@ -157,11 +157,13 @@ export function EditorFile({dict}:{dict:ITranslades}){
             </Form>
           </Form.Container>
           <Form.Container style={{textTransform:"capitalize"}} id="document" label={dict.curriculum.containers.document}>
-            <Form initialState={profile?.document||{}} className="document" onSubmit={(data)=>handleOnSubmitDocumentSettings(data)}>
+            <Form persistData initialState={profile?.document||{}} className="document" onSubmit={(data)=>handleOnSubmitDocumentSettings(data)}>
+              <Form.FileImage name="background" type="dataUrl" />
               <Form.SelectField name="size" label={dict.curriculum.formDocument.size} required >
                 <option value="A4">A4</option>
                 <option value="letter">{dict.curriculum.formDocument.letter}</option>
               </Form.SelectField>
+              <Form.TextField name="color" label={dict.curriculum.formDocument.color} />
               <Form.Submit name="submit" label={dict.curriculum.formSubmit} />
             </Form>
           </Form.Container>
@@ -187,7 +189,7 @@ const LevelBar = styled.div<{$level:1|2|3|4|5}>`
 const Layaut = styled.div`
 display: grid;
 grid-template-columns: 1fr 1fr;
-height: 90vh;
+min-height: 90vh;
 padding: 0 1rem;
 & .personal-details{
   display: grid;
@@ -246,8 +248,9 @@ padding: 0 1rem;
   display: grid;
   grid-gap: 1rem;
   grid-template-areas:
-  "size size"
-  "auto submit";
+  "background size size"
+  "background color color"
+  "auto auto submit";
 }
 `
 const Card = styled.div`

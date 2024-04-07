@@ -54,6 +54,7 @@
         },
         "formDocument":{
             "size":"size",
+            "color":"text color",
             "letter":"carta"
         },
         "formSubmit":"save"

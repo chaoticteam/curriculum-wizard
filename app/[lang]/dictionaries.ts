@@ -57,6 +57,7 @@ export interface ITranslades{
         },
         formDocument:{
             size: string,
+            color: string,
             letter:string,
         },
         formSubmit:string
