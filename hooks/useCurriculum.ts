@@ -53,6 +53,10 @@ export function useCurriculum(){
   const handleOnSubmitPersonalDetails= useCallback(async(data:any)=>{
     setProfile({...profile,...data});
   },[setProfile])
+  const handleOnSubmitSocialMedia= useCallback(async(data:any)=>{
+    console.log(data)
+    setProfile({...profile,socialMedia:data});
+  },[setProfile])
   const handleOnSubmitFormations= useCallback(async(data:any)=>{
     if (!profile) return;
     const formations: IFormation[]=[
@@ -121,6 +125,7 @@ export function useCurriculum(){
   return {
     profile,
     handleOnSubmitPersonalDetails,
+    handleOnSubmitSocialMedia,
     handleOnSubmitFormations,
     handleRemoveFormation,
     handleOnSubmitExperience,

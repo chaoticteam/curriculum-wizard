@@ -8,7 +8,8 @@
     },
     "curriculum":{
         "containers":{
-            "details":"personal Details",
+            "details":"personal details",
+            "socialMedia":"social media",
             "formations":"formations",
             "experience":"experience",
             "skills":"skills",

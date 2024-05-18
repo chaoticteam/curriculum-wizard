@@ -17,6 +17,7 @@ export function EditorFile({dict}:{dict:ITranslades}){
     handleOnSubmitHobbie,
     handleOnSubmitLanguage,
     handleOnSubmitPersonalDetails,
+    handleOnSubmitSocialMedia,
     handleOnSubmitSkill,
     handleRemoveExperience,
     handleRemoveFormation,
@@ -37,6 +38,18 @@ export function EditorFile({dict}:{dict:ITranslades}){
               <Form.DatePickerFull name="dateBorn" label={dict.curriculum.formDetails.dateBorn} />
               <Form.FileImage name="photo" type="dataUrl" />
               <Form.TextArea name="bio" label={dict.curriculum.formDetails.bio} />
+              <Form.Submit name="submit" label={dict.curriculum.formSubmit} />
+            </Form>
+          </Form.Container>
+          <Form.Container style={{textTransform:"capitalize"}} id="social-media" label={dict.curriculum.containers.socialMedia}>
+            <Form initialState={profile?.socialMedia||{}} className="social-media" persistData onSubmit={(data)=>handleOnSubmitSocialMedia(data)}>
+              <Form.TextField name="github" label="Github" />
+              <Form.TextField name="gitlab" label="Gitlab" />
+              <Form.TextField name="linkedin" label="Linkedin" />
+              <Form.TextField name="twitter" label="Twitter" />
+              <Form.TextField name="facebook" label="Facebook" />
+              <Form.TextField name="instagram" label="Instagram" />
+              <Form.TextField name="youtube" label="Youtube" />
               <Form.Submit name="submit" label={dict.curriculum.formSubmit} />
             </Form>
           </Form.Container>
@@ -200,6 +213,16 @@ padding: 0 1rem;
     "email email email"
     "bio bio bio"
     "auto auto submit";
+}
+& .social-media{
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas:
+    "github gitlab"
+    "linkedin twitter"
+    "facebook instagram"
+    "youtube youtube"
+    "submit submit";
 }
 & .formations{
   display: grid;

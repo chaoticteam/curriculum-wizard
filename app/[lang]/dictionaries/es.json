@@ -9,6 +9,7 @@
     "curriculum":{
         "containers":{
             "details":"datos Personales",
+            "socialMedia":"redes sociales",
             "formations":"educacion",
             "experience":"experiencia",
             "skills":"habilidades",

@@ -12,6 +12,7 @@ export interface ITranslades{
     curriculum:{
         containers:{
             details:string,
+            socialMedia:string,
             formations:string,
             experience:string,
             skills:string,

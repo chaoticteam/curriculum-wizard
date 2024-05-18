@@ -15,6 +15,23 @@ export function useFiles(){
         if (!state) return;
         localStorage.setItem("files",JSON.stringify(state));
     },[state]);
+    const getName = useCallback(()=>{
+        const regex = /untitled-(\d+)/;
+        let value = 1;
+        state?.forEach(item=>{
+            const result = regex.exec(item)||[];
+            const group = parseInt(result[1])+1;
+            value = group>value?group:value;
+        })
+        const name = `untitled-${value}`;
+        return name
+    },[state])
+    const handleDuplicate = useCallback((nameSource:string)=>{
+        const content = localStorage.getItem(nameSource)
+        const name = getName()
+        localStorage.setItem(name,content||"");
+        setState([...state||[],name])
+    },[getName])
     const handleDeleteFile = useCallback((key:string)=>{
         localStorage.removeItem(key);
         const newState = state?.filter(item=>item!=key)
@@ -31,22 +48,16 @@ export function useFiles(){
         setState(newState);
     },[state,setState]);
     const handleNew = useCallback(()=>{
-        const regex = /untitled-(\d+)/;
-        let value = 1;
-        state?.forEach(item=>{
-            const result = regex.exec(item)||[];
-            const group = parseInt(result[1])+1;
-            value = group>value?group:value;
-        })
-        const name = `untitled-${value}`;
+        const name = getName()
         localStorage.setItem(name,"{}");
         setState([...state||[],name])
-    },[state,setState])
+    },[getName,setState])
     return {
         state,
         handleDeleteFile,
         handleSave,
         handleNew,
-        handlePush
+        handlePush,
+        handleDuplicate,
     }
 }
