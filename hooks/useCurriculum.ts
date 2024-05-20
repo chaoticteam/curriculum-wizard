@@ -2,7 +2,6 @@
 import { IContentCV, IExperince, IFormation, ILanguage, ISkills } from "@/components";
 import { redirect, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { PageSize } from '@react-pdf/types';
 
 
 export function useCurriculum(){
@@ -54,9 +53,8 @@ export function useCurriculum(){
     setProfile({...profile,...data});
   },[setProfile])
   const handleOnSubmitSocialMedia= useCallback(async(data:any)=>{
-    console.log(data)
     setProfile({...profile,socialMedia:data});
-  },[setProfile])
+  },[profile,setProfile])
   const handleOnSubmitFormations= useCallback(async(data:any)=>{
     if (!profile) return;
     const formations: IFormation[]=[

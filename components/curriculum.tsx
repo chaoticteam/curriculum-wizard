@@ -166,7 +166,7 @@ export const CurriculumTemplate:React.FC<IProps> = ({profile,dict}) =>{
   } = profile;
   const {size,background,color} = profile.document||{};
   const showSideBar=!!dateBorn||skills?.length||languages?.length||hobbies?.length;
-  const personalDetails=!!dateBorn||!!email||!!phoneNumber;
+  const personalDetails=!!dateBorn||!!email||!!phoneNumber||!!socialMedia;
   return (
     <Document>
       <Page size={size} style={{...styles.page,color}} wrap>
